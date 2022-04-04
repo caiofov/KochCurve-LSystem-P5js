@@ -55,12 +55,11 @@ class KochCurve{
     generate_points(){
         let last_point = this.initial_point
         
-        for(let l=0; l<this.generated_string.length; l++){
-            let s = this.generated_string[l]
+        for(let l=0; l< this.generated_string.length; l++){
+            let current_character = this.generated_string[l]
             let current_point
       
-            switch (s){
-              
+            switch (current_character){
               case "f": //move foward
                 current_point = this.move_forward(last_point)
                 break
@@ -84,25 +83,25 @@ class KochCurve{
     //moving methods
     move_forward(v){
         let v2 = v.copy()
-        let ang = v2.angleBetween(createVector(1,0)) == 0 ? 0 : this.angle
+        let ang = v2.angleBetween(createVector(1,0)) == 0 ? 0 : this.angle_acc
         
-        v2.x = v.x + SPEED*cos(ang)
-        v2.y = v.y + SPEED*sin(ang)
+        v2.x = v.x + this.pace*cos(ang)
+        v2.y = v.y + this.pace*sin(ang)
         return v2
     }
     move_left(v) {
         let v2 = this.move_forward(v)
-        this.angle += this.default_angle
-        v2.x = v.x + SPEED*cos(this.angle)
-        v2.y = v.y + SPEED*sin(this.angle)
+        this.angle_acc += this.default_angle
+        v2.x = v.x + this.pace*cos(this.angle_acc)
+        v2.y = v.y + this.pace*sin(this.angle_acc)
         
         return v2
     }
     move_right(v){
-        this.angle -= this.default_angle
+        this.angle_acc -= this.default_angle
         let v2 = this.move_forward(v)
-        v2.x = v.x + SPEED*cos(this.angle)
-        v2.y = v.y + SPEED*sin(this.angle)
+        v2.x = v.x + this.pace*cos(this.angle_acc)
+        v2.y = v.y + this.pace*sin(this.angle_acc)
     
         return v2
     }
