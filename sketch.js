@@ -1,10 +1,34 @@
-var SPEED = 5, vectors = []
+// INSERT YOUR PREFERENCES HERE - - - - - -
+
+//canva dimensions
+CNV_HEIGHT = 400
+CNV_WIDTH = 800
+
+const SPEED = 5 //pace of the figure: how many pixels it will walk to the next generated point
+
+//l-system: the system of rules the koch curve will folllow to generate its path. Separate the rules by hierachy. If you have any questions, please read the instructions.
+//example used: f -> f+f-f-f+f
+const L_SYSTEM_LEFT = ["f"]
+const L_SYSTEM_RIGHT = ["f+f-f-f+f"]
+
+const SEED = "f" //initial string to apply the rules of the l-system
+
+//starting point of the figure
+const INITIAL_X = 0
+const INITIAL_Y = CNV_HEIGHT/2
+var initial_point; 
+
+const EXPANSIONS = 4 //number of iterations in order to generate a greater figure
+
+// - - - - - - - - - - - - - - - - - - - - - - - -
+
 
 function setup() {
-  createCanvas(800, 400);
-  string = axiom("f",3)
-  vectors = string_to_vectors(string)
-  // path()
+  createCanvas(CNV_WIDTH, CNV_HEIGHT);
+  initial_point = createVector(INITIAL_X, INITIAL_Y)
+  var koch = new KochCurve(initial_point, SPEED,L_SYSTEM_LEFT, L_SYSTEM_RIGHT, SEED,  EXPANSIONS)
+  koch.generate()
+  print(koch.generated_string)
 }
 
 function string_to_vectors(string, initial_vector = createVector(0,height/2)){
@@ -63,16 +87,16 @@ function axiom(seed, n = 10){
 var angle = 0;
 const default_angle = Math.PI/2;
 function draw() {
-//   changeMatrix()
+// //   changeMatrix()
   background(240);
 
-  stroke(0)
+//   stroke(0)
 
-  circle(vectors[0].x, vectors[0].y,4)
-  for(let l = 0; l < vectors.length-1; l++){
-    line(vectors[l].x,vectors[l].y,vectors[l+1].x,vectors[l+1].y)
-    circle(vectors[l+1].x,vectors[l+1].y,4)
-  }
+//   circle(vectors[0].x, vectors[0].y,4)
+//   for(let l = 0; l < vectors.length-1; l++){
+//     line(vectors[l].x,vectors[l].y,vectors[l+1].x,vectors[l+1].y)
+//     circle(vectors[l+1].x,vectors[l+1].y,4)
+//   }
   
   
 }
